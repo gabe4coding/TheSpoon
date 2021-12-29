@@ -43,11 +43,14 @@ protocol RestaurantsUseCaseInterface {
     ///- Returns A Completable which completes after removing.
     func removeFavourite(restaurant: RestaurantModel) -> Completable
     
-    ///Tells if the specified restaurant is a favourite.
+    ///Observes for changes about the  favourite status of specific restaurant.
     ///- Parameter restaurant The specified restuarant to be checked in favourites.
     ///- Returns An observable which returns the result.
     func observeFavourite(restaurant: RestaurantModel) -> Observable<Bool>
     
+    ///Retrieves the latest status for the specified restaurant, then completes.
+    ///- Parameter restaurant The specified restuarant to be checked in favourites.
+    ///- Returns A Single which returns the result.
     func isFavourite(restaurant: RestaurantModel) -> Single<Bool>
 
     ///Executes a soring on the list (observed through **restaurants()**), based on a specified type.

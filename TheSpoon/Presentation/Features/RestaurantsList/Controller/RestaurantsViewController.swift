@@ -11,13 +11,22 @@ import RxDataSources
 
 class RestaurantsViewController: UITableViewController, ViewModelBindable {
     
-    private struct Constants {
-        static let barTitle = "TheSpoon"
+    private struct ViewConst {
+        //Table View
         static let rowHeight: CGFloat = 370
         static let cellId = "Cell"
+        static let sortImg = "sort"
         
-        static let noInternetMsg = "Internet offline, check your device connection."
-        static let genericMsg = "An error occured, please try again."
+        //Localizable eventually mapped using a CMS or equivalent.
+        static let txtTitle = "TheSpoon"
+        static let txtNoInternetMsg = "Internet offline, check your device connection."
+        static let txtGenericMsg = "An error occured, please try again."
+        static let txtNameSorting = "Name"
+        static let txtRatingSorting = "Rating"
+        static let txtResetSorting = "Reset"
+        static let txtCancel = "Cancel"
+        static let txtRetry = "Retry"
+        static let txtWarning = "Warning"
     }
     
     private var disposables: DisposeBag = DisposeBag()
@@ -36,32 +45,42 @@ class RestaurantsViewController: UITableViewController, ViewModelBindable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.topItem?.title = Constants.barTitle
+        setupNavigationController()
+        setupSubviews()
+    }
+    
+    func setupNavigationController() {
+        
+        navigationController?.navigationBar.topItem?.title = ViewConst.txtTitle
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let itemBar = UIBarButtonItem.menuButton(self,
                                                  action: #selector(selectListOrder),
-                                                 imageName: "sort",
+                                                 imageName: ViewConst.sortImg,
                                                  tint: .darkGray)
         
         navigationItem.rightBarButtonItem = itemBar
-        
+    }
+    
+    func setupSubviews() {
         view = UIView()
         view.backgroundColor = .white
         tableView = UITableView()
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = Constants.rowHeight
+        tableView.estimatedRowHeight = ViewConst.rowHeight
         tableView.separatorStyle = .none
         tableView.dataSource = nil
         
         tableView.register(RestaurantTableViewCell.self,
-                           forCellReuseIdentifier: Constants.cellId)
+                           forCellReuseIdentifier: ViewConst.cellId)
         
         viewModel?
             .objects()
-            .bind(to: tableView.rx.items(cellIdentifier: Constants.cellId,
-                                         cellType: RestaurantTableViewCell.self))
-            { _, model, cell in
+            .bind(to:
+                tableView.rx.items(cellIdentifier: ViewConst.cellId,
+                           cellType: RestaurantTableViewCell.self)
+                  
+            ) { _, model, cell in
                 cell.bind(to: RestaurantItemViewModel(model: model))
             }
             .disposed(by: disposables)
@@ -74,23 +93,23 @@ class RestaurantsViewController: UITableViewController, ViewModelBindable {
             .disposed(by: disposables)
     }
     
+    
     func errorOccured(error: ErrorType) {
-        let alertController = UIAlertController(title: "Warning",
+        let alertController = UIAlertController(title: ViewConst.txtWarning,
                                                 message: errorMessage(error),
                                                 preferredStyle: .alert)
         
-        let retryButton = UIAlertAction(title: "Retry",
-                                        style: .default,
-                                        handler: {[weak self] _ in
-            self?.viewModel?.reload()
-        })
+        alertController.addAction(
+            UIAlertAction(title: ViewConst.txtCancel,style: .cancel, handler: nil)
+        )
         
-        let cancelButton = UIAlertAction(title: "Cancel",
-                                         style: .cancel,
-                                         handler: nil)
-        
-        alertController.addAction(cancelButton)
-        alertController.addAction(retryButton)
+        alertController.addAction(
+            UIAlertAction(title: ViewConst.txtRetry, style: .default, handler:
+                { [weak self] _ in
+                    self?.viewModel?.reload()
+                }
+            )
+        )
         
         self.present(alertController, animated: true, completion: nil)
     }
@@ -98,43 +117,42 @@ class RestaurantsViewController: UITableViewController, ViewModelBindable {
     private func errorMessage(_ error: ErrorType) -> String {
         switch error {
         case .offline:
-            return Constants.noInternetMsg
+            return ViewConst.txtNoInternetMsg
         default:
-            return Constants.genericMsg
+            return ViewConst.txtGenericMsg
         }
     }
     
     @objc func selectListOrder() {
-        let alertController = UIAlertController(title: "Sort by",
-                                                message: nil,
-                                                preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let sortByName = UIAlertAction(title: "Name",
-                                       style: .default,
-                                       handler: {[weak self] (action) -> Void in
-            self?.viewModel?.sort(by: .name)
-        })
+        alertController.addAction(
+            UIAlertAction(title: ViewConst.txtNameSorting, style: .default, handler:
+                { [weak self] (action) -> Void in
+                    self?.viewModel?.sort(by: .name)
+                }
+            )
+        )
         
-        let sortByRating = UIAlertAction(title: "Rating",
-                                         style: .default,
-                                         handler: {[weak self] (action) -> Void in
-            self?.viewModel?.sort(by: .rating)
-        })
+        alertController.addAction(
+            UIAlertAction(title: ViewConst.txtRatingSorting, style: .default, handler:
+                { [weak self] (action) -> Void in
+                    self?.viewModel?.sort(by: .rating)
+                }
+            )
+        )
         
-        let resetSort = UIAlertAction(title: "Reset",
-                                      style: .default,
-                                      handler: {[weak self] (action) -> Void in
-            self?.viewModel?.sort(by: .none)
-        })
+        alertController.addAction(
+            UIAlertAction(title: ViewConst.txtResetSorting, style: .default, handler:
+                { [weak self] (action) -> Void in
+                    self?.viewModel?.sort(by: .none)
+                }
+            )
+        )
         
-        let cancelButton = UIAlertAction(title: "Cancel",
-                                         style: .cancel,
-                                         handler: nil)
-        
-        alertController.addAction(sortByName)
-        alertController.addAction(sortByRating)
-        alertController.addAction(resetSort)
-        alertController.addAction(cancelButton)
+        alertController.addAction(
+            UIAlertAction(title: ViewConst.txtCancel, style: .cancel, handler: nil)
+        )
         
         self.present(alertController, animated: true, completion: nil)
     }

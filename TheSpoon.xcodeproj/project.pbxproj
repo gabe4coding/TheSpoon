@@ -76,7 +76,7 @@
 		F79E7BF9277C5910003866BB /* Extensions+UIBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIBarButtonItem.swift"; sourceTree = "<group>"; };
 		F79E7BFB277C67A0003866BB /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
 		F79E7BFD277C7CA1003866BB /* Extensions+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Error.swift"; sourceTree = "<group>"; };
-		F79E7BFF277C7D08003866BB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F79E7BFF277C7D08003866BB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
