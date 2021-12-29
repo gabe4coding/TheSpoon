@@ -1,5 +1,5 @@
 //
-//  Extensions+Color.swift
+//  Extensions+UIColor.swift
 //  TheSpoon
 //
 //  Created by Gabriele Pavanello on 29/12/21.

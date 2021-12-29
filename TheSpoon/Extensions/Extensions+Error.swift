@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+extension Error {
+    func mapNetworkError() -> ErrorType {
+        switch (self as NSError).code {
+        case 13:
+            return .offline
+        case NSURLErrorTimedOut:
+            return .timeout
+        default: return .generic
+        }
+    }
+}

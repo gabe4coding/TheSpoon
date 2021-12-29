@@ -11,7 +11,7 @@ protocol ViewModel : AnyObject {}
 
 protocol ViewModelBindable: AnyObject {
     associatedtype ViewModelType = ViewModel
-    var viewModel: ViewModelType! { get set }
+    var viewModel: ViewModelType { get set }
 }
 
 protocol ItemViewModelBindable {

@@ -15,61 +15,66 @@ class RestaurantsRepository: RestaurantsRepositoryInterface {
     }
     
     @Inject var networking: NetworkingDataSourceInterface
+    @Inject var storage: LocalStorageDataSourceInterface
     
     private var disposables = DisposeBag()
     private var subject: BehaviorSubject<[String]> = BehaviorSubject(value: [])
     
     init() {
-        getFavouritesUuids().subscribe {
-            self.subject.onNext($0)
-        }.disposed(by: disposables)
+        getFavouritesUuids()
+            .subscribe {[weak self] favs in
+                self?.subject.onNext(favs)
+            }
+            .disposed(by: disposables)
     }
     
-    func getRestaurants() -> Observable<Restaurants> {
+    func getRestaurants() -> Single<Restaurants> {
         networking.perform(request: RestaurantsRequest())
     }
     
-    func setFavourite(uuid: String) -> Observable<Void> {
-        getFavouritesUuids().flatMapFirst { uuids -> Observable<Void> in
-            var newUuids = Set(uuids)
-            newUuids.insert(uuid)
-            
-            self.subject.onNext(Array(newUuids))
-            
-            let storage = UserDefaults.standard
-            storage.set(Array(newUuids), forKey: Constants.favouritesKey)
-            storage.synchronize()
-            
-            return Observable.just(())
-        }
+    func setFavourite(uuid: String) -> Completable {
+        getFavouritesUuids()
+            .flatMapCompletable {[weak self] uuids in
+                guard let self = self else {
+                    return Observable.empty().asCompletable()
+                }
+                var newUuids = Set(uuids)
+                newUuids.insert(uuid)
+                
+                self.subject.onNext(Array(newUuids))
+                return self.storage.set(value: Array(newUuids),
+                                        forKey: Constants.favouritesKey)
+            }
     }
     
-    func removeFavourite(uuid: String) -> Observable<Void> {
-        getFavouritesUuids().flatMapFirst { uuids -> Observable<Void> in
-            var newUuids = Set(uuids)
-            newUuids.remove(uuid)
-            
-            self.subject.onNext(Array(newUuids))
-            
-            let storage = UserDefaults.standard
-            storage.set(Array(newUuids), forKey: Constants.favouritesKey)
-            storage.synchronize()
-            
-            return Observable.just(())
-        }
+    func removeFavourite(uuid: String) -> Completable {
+        getFavouritesUuids()
+            .flatMapCompletable {[weak self] uuids in
+                guard let self = self else {
+                    return Observable.empty().asCompletable()
+                }
+                var newUuids = Set(uuids)
+                newUuids.remove(uuid)
+                
+                self.subject.onNext(Array(newUuids))
+                return self.storage.set(value: Array(newUuids),
+                                        forKey: Constants.favouritesKey)
+            }
     }
     
-    func favourites() -> Observable<[String]> {
-        subject
+    func favourites() -> Observable<[String]> { subject }
+    
+    func getFavouritesUuids() -> Single<[String]> {
+        retrieveUUids()
+            .map { result -> [String] in
+                guard let result = result else {
+                    return []
+                }
+                return result
+            }
     }
     
-    private func getFavouritesUuids() -> Observable<[String]> {
-        return Observable.create { single in
-                let storage = UserDefaults.standard
-                let storedData = storage.object(forKey: "favourites") as? [String] ?? []
-                single.onNext(storedData)
-
-                return Disposables.create()
-        }
+    private func retrieveUUids() -> Single<[String]?> {
+        storage.object(forKey: Constants.favouritesKey)
     }
 }

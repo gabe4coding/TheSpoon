@@ -9,10 +9,11 @@ import Foundation
 import RxSwift
 
 protocol RestaurantsRepositoryInterface {
-    func getRestaurants() -> Observable<Restaurants>
-    func setFavourite(uuid: String) -> Observable<Void>
-    func removeFavourite(uuid: String) -> Observable<Void>
+    func getRestaurants() -> Single<Restaurants>
+    func setFavourite(uuid: String) -> Completable
+    func removeFavourite(uuid: String) -> Completable
     func favourites() -> Observable<[String]>
+    func getFavouritesUuids() -> Single<[String]>
 }
 
 

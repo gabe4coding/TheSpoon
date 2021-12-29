@@ -14,23 +14,5 @@ protocol NetworkingDataSourceInterface {
     ///Performs an API request
     ///- Parameter request Encapsulate all the information to execute an API request toward the Cloud.
     ///- Returns The response of the request, otherwise an error.
-    func perform<T: Decodable>(request: RequestAPI) -> Observable<T>
+    func perform<T: Decodable>(request: RequestAPI) -> Single<T>
 }
-
-class NetworkingDataSource: NetworkingDataSourceInterface {
-    
-    func perform<T: Decodable>(request: RequestAPI) -> Observable<T> {
-        Observable.just(request)
-            .buildRequest()
-            .flatMap { urlRequest -> Observable<T> in
-                RxAlamofire
-                    .requestDecodable(urlRequest)
-                    .debug()
-                    .flatMap { _, decoded in
-                        Observable<T>.just(decoded)
-                    }
-            }
-    }
-}
-
-

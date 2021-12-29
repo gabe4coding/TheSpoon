@@ -9,30 +9,19 @@ import UIKit
 import RxSwift
 import Swinject
 
-struct Const {
-    //Paddings
-    static let zero: CGFloat = 0
-    static let spacing: CGFloat = 5
-    static let topPadding: CGFloat = 10
-    static let bottomPadding: CGFloat = -10
-    static let leftPadding: CGFloat = 10
-    static let rightPadding: CGFloat = -10
-    
-    //Sizes
-    static let imageHeight: CGFloat = 210
-    static let squaredBtnFavSize: CGFloat = 35
-}
-
 class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
+    
+    private struct ViewConst {
+        static let imageHeight: CGFloat = 210
+        static let ratingWidth: CGFloat = 80
+        static let squaredBtnFavSize: CGFloat = 35
+        static let enabledFavBtnName: String = "empty-heart"
+        static let disabledFavBtnName: String = "solid-heart"
+        static let avgPriceText: String = "Average price"
+    }
     
     private var viewModel: RestaurantItemViewModel? = nil
     private var disposable: Disposable? = nil
-    
-    @UsesAutoLayout
-    var imgView: UIImageView = UIImageView()
-    
-    @UsesAutoLayout
-    var cuisine: UILabel = UILabel()
     
     @UsesAutoLayout
     var name: UILabel = UILabel()
@@ -41,16 +30,101 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
     var address: UILabel = UILabel()
     
     @UsesAutoLayout
-    var discount: UILabel = UILabel()
-    
-    @UsesAutoLayout
-    var price: UILabel = UILabel()
-    
-    @UsesAutoLayout
-    var favouriteBtn = UIButton(type: .custom)
+    var pricingView: PricingView = PricingView(frame: .zero)
     
     @UsesAutoLayout
     var rating: RatingView = RatingView(frame: .zero)
+    
+    @UsesAutoLayout
+    var imgView: UIImageView = UIImageView()
+    private lazy var imgViewConstraints: [NSLayoutConstraint] = {
+        [
+            imgView.topAnchor
+                .constraint(equalTo: contentView.topAnchor,
+                        constant: Layout.topPadding),
+        
+            imgView.leadingAnchor
+                .constraint(equalTo: contentView.leadingAnchor,
+                        constant: Layout.leftPadding),
+        
+            imgView.trailingAnchor
+                .constraint(equalTo: contentView.trailingAnchor,
+                        constant: Layout.rightPadding),
+        
+            imgView.heightAnchor
+                .constraint(equalToConstant: ViewConst.imageHeight)
+        ]
+    }()
+    
+    @UsesAutoLayout
+    var cuisine: UILabel = UILabel()
+    private lazy var cuisineConstraints: [NSLayoutConstraint] = {
+        [
+            cuisine.leadingAnchor
+                .constraint(equalTo: imgView.leadingAnchor),
+            
+            cuisine.topAnchor
+                .constraint(equalTo: imgView.bottomAnchor,
+                            constant: Layout.topPadding)
+        ]
+    }()
+    
+    @UsesAutoLayout
+    var favouriteBtn = UIButton(type: .custom)
+    private lazy var favouriteBtnConstraints: [NSLayoutConstraint] = {
+        [
+            favouriteBtn.topAnchor
+                .constraint(equalTo: imgView.topAnchor,
+                            constant: Layout.topPadding),
+            
+            favouriteBtn.trailingAnchor
+                .constraint(equalTo: imgView.trailingAnchor,
+                            constant: Layout.rightPadding),
+            
+            favouriteBtn.widthAnchor
+                .constraint(equalToConstant: ViewConst.squaredBtnFavSize),
+            
+            favouriteBtn.heightAnchor
+                .constraint(equalToConstant: ViewConst.squaredBtnFavSize)
+        ]
+    }()
+    
+    lazy var stackInfo: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [self.name, self.address, self.pricingView])
+        stack.axis = .vertical
+        stack.spacing = Layout.spacing
+        stack.distribution = .fill
+        
+        return stack
+    }()
+    
+    lazy var stackInfoAndRating: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [self.stackInfo, self.rating])
+        stack.axis = .horizontal
+        stack.alignment = .top
+        stack.spacing = Layout.spacing * 4
+        stack.distribution = .fillProportionally
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stack
+    }()
+    lazy var stackInfoConstraints: [NSLayoutConstraint] = {
+        [
+            stackInfoAndRating.topAnchor
+                .constraint(equalTo: cuisine.bottomAnchor,
+                            constant: Layout.topPadding * 1.2),
+            
+            stackInfoAndRating.leadingAnchor
+                .constraint(equalTo: imgView.leadingAnchor),
+            
+            stackInfoAndRating.bottomAnchor
+                .constraint(equalTo: contentView.bottomAnchor,
+                            constant: Layout.bottomPadding * 2),
+            
+            stackInfoAndRating.trailingAnchor
+                .constraint(equalTo: imgView.trailingAnchor)
+        ]
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -63,7 +137,6 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
     }
     
     private func setupSubviews() {
-        
         //Main Image
         imgView.layer.cornerRadius = 5.0
         imgView.clipsToBounds = true
@@ -73,182 +146,76 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
         
         //Cuisine Type
         cuisine.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        cuisine.textColor = UIColor(named: "SubtitleColor")
+        cuisine.textColor = UIColor.subtitleColor
         cuisine.layer.opacity = 0.4
         contentView.addSubview(cuisine)
         
         //Restaurant Name
         name.font = UIFont.systemFont(ofSize: 23, weight: .bold)
-        name.textColor = UIColor(named: "LabelColor")
+        name.textColor = UIColor.titleColor
         name.lineBreakMode = .byTruncatingTail
         name.numberOfLines = 2
-        contentView.addSubview(name)
         
         //Address
         address.font = UIFont.systemFont(ofSize: 16, weight: .light)
-        address.textColor = UIColor(named: "SubtitleColor")
+        address.textColor = UIColor.subtitleColor
         address.lineBreakMode = .byTruncatingTail
-        address.numberOfLines = 1
-        contentView.addSubview(address)
-        
-        //Discount
-        discount.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        discount.textColor = .black
-        discount.textAlignment = .center
-        discount.backgroundColor = .systemYellow
-        discount.lineBreakMode = .byTruncatingTail
-        discount.numberOfLines = 1
-        discount.layer.cornerRadius = 5.0
-        discount.clipsToBounds = true
-        contentView.addSubview(discount)
-        
-        //Average Price
-        price.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        price.textColor = UIColor(named: "SubtitleColor")
-        price.lineBreakMode = .byTruncatingTail
-        price.numberOfLines = 1
-        contentView.addSubview(price)
+        address.numberOfLines = 2
         
         //Favourite
         favouriteBtn.contentMode = .scaleAspectFit
         favouriteBtn.contentHorizontalAlignment = .fill
         favouriteBtn.contentVerticalAlignment = .fill
-        favouriteBtn.imageView?.tintColor = .white
-        if let image = UIImage(named: "empty-heart")?.withRenderingMode(.alwaysTemplate) {
+        
+        if let image = UIImage(named: ViewConst.disabledFavBtnName)?
+            .withRenderingMode(.alwaysTemplate) {
             favouriteBtn.setImage(image, for: .normal)
         }
         
-        if let image = UIImage(named: "solid-heart") {
+        if let image = UIImage(named: ViewConst.enabledFavBtnName)?
+            .withRenderingMode(.alwaysTemplate){
             favouriteBtn.setImage(image, for: .selected)
         }
-        favouriteBtn.backgroundColor = .darkGray
+        favouriteBtn.imageView?.tintColor = .white
+        favouriteBtn.backgroundColor = .lightGray
         favouriteBtn.imageEdgeInsets = UIEdgeInsets(top: 8,left: 6,bottom: 7,right: 6)
         favouriteBtn.addTarget(self,
                                action: #selector(self.favouriteBtnTapped),
                                for: .touchUpInside)
-        favouriteBtn.layer.cornerRadius = Const.squaredBtnFavSize / 2
-        contentView.addSubview(favouriteBtn)
+        favouriteBtn.layer.cornerRadius = ViewConst.squaredBtnFavSize / 2
         
-        //Rating
-        contentView.addSubview(rating)
+        contentView.addSubview(favouriteBtn)
+        contentView.addSubview(stackInfoAndRating)
     }
     
     private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            
-            //ImageView
-            imgView.topAnchor
-                .constraint(equalTo: contentView.topAnchor,
-                            constant: Const.topPadding),
-            
-            imgView.leadingAnchor
-                .constraint(equalTo: contentView.leadingAnchor,
-                            constant: Const.leftPadding),
-            
-            imgView.trailingAnchor
-                .constraint(equalTo: contentView.trailingAnchor,
-                            constant: Const.rightPadding),
-            
-            imgView.heightAnchor
-                .constraint(equalToConstant: Const.imageHeight),
-            
-            
-            //Rating Label
-            rating.topAnchor
-                .constraint(equalTo: name.topAnchor),
-            
-            rating.trailingAnchor
-                .constraint(equalTo: imgView.trailingAnchor),
-            
-            cuisine.leadingAnchor
-                .constraint(equalTo: imgView.leadingAnchor),
-            
-            cuisine.topAnchor
-                .constraint(equalTo: imgView.bottomAnchor,
-                            constant: Const.topPadding),
-            
-            //Name Label
-            name.leadingAnchor
-                .constraint(equalTo: imgView.leadingAnchor),
-            
-            name.topAnchor
-                .constraint(equalTo: cuisine.bottomAnchor,
-                            constant: Const.topPadding * 1.2),
-            name.trailingAnchor
-                .constraint(equalTo: rating.leadingAnchor,
-                            constant: Const.rightPadding * 3),
-            
-            //Address Label
-            address.leadingAnchor
-                .constraint(equalTo: imgView.leadingAnchor),
-            
-            address.topAnchor
-                .constraint(equalTo: name.bottomAnchor,
-                            constant: Const.spacing),
-            
-            address.trailingAnchor
-                .constraint(equalTo: imgView.trailingAnchor),
-            
-            //Discount Label
-            discount.widthAnchor
-                .constraint(equalToConstant: 45),
-            
-            discount.centerYAnchor
-                .constraint(equalTo: price.centerYAnchor),
-            
-            discount.bottomAnchor
-                .constraint(equalTo: contentView.bottomAnchor,
-                            constant: Const.bottomPadding * 2),
-            
-            discount.leadingAnchor
-                .constraint(equalTo: price.trailingAnchor,
-                            constant: Const.leftPadding),
-            
-            //Price Label
-            price.leadingAnchor
-                .constraint(equalTo: imgView.leadingAnchor),
-            
-            price.topAnchor
-                .constraint(equalTo: address.bottomAnchor,
-                            constant: Const.spacing),
-            price.bottomAnchor
-                .constraint(equalTo: contentView.bottomAnchor,
-                            constant: Const.bottomPadding * 2),
-            
-            //Favourite Button
-            favouriteBtn.topAnchor
-                .constraint(equalTo: imgView.topAnchor,
-                            constant: Const.topPadding),
-            
-            favouriteBtn.trailingAnchor
-                .constraint(equalTo: imgView.trailingAnchor,
-                            constant: Const.rightPadding),
-            
-            favouriteBtn.widthAnchor
-                .constraint(equalToConstant: Const.squaredBtnFavSize),
-            
-            favouriteBtn.heightAnchor
-                .constraint(equalToConstant: Const.squaredBtnFavSize)
-        ])
+        NSLayoutConstraint.activate(imgViewConstraints +
+                                    cuisineConstraints +
+                                    stackInfoConstraints +
+                                    favouriteBtnConstraints)
     }
     
     private func setupDataBinding() {
+        //Reset in case of new binding when cell is reused
         disposable?.dispose()
         imgView.image = nil
+        
         if let img = viewModel?.data.img {
             imgView.load(url: img)
         }
-        
+                
         cuisine.text = viewModel?.data.cuisine.uppercased() ?? "-"
         name.text = viewModel?.data.name ?? "-"
         address.text = viewModel?.data.address ?? "-"
-        discount.text = viewModel?.data.discount ?? "-"
-        price.text = "Average price \(viewModel?.data.avgPrice ?? "-")€"
-        rating.ratinglbl.text = viewModel?.data.rating ?? "-"
-        rating.reviewsLbl.text = viewModel?.data.numReviews ?? "-"
         
-        setupConstraints()
+        pricingView.setText(discount: viewModel?.data.discount ?? "-",
+                            price: "\(ViewConst.avgPriceText) \(viewModel?.data.avgPrice ?? "-")€")
         
+        rating.setText(rating: viewModel?.data.rating ?? "-",
+                       reviews: viewModel?.data.numReviews ?? "-")
+        
+        //In a use case where favourite is managed with a remote storage, it could be useful
+        //to add a loader when the selection changes.
         disposable = viewModel?
             .isFavourite()
             .subscribe(onNext: {[weak self] value in
@@ -260,6 +227,8 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
                                   animations: { self.favouriteBtn.isSelected = value },
                                   completion: nil)
             })
+        
+        setupConstraints()
     }
     
     func bind(to viewModel: ViewModel) {
@@ -269,5 +238,9 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
     
     @objc func favouriteBtnTapped(sender: UIButton) {
         viewModel?.toggleFavourite()
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(false, animated: animated)
     }
 }

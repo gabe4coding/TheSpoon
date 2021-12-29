@@ -17,5 +17,4 @@ struct RestaurantsRequest: RequestAPI {
     var customHeaders: [String : String] = [:]
     var queryParameters: [String : String] = [:]
     var bodyParameters: [String : Any]? = nil
-    var useMockWithName: String? = nil
 }

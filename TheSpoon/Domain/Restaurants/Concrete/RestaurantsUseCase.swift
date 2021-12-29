@@ -14,7 +14,7 @@ class RestaurantsUseCase: RestaurantsUseCaseInterface {
     
     private let orderType: BehaviorSubject<ListOrder> = BehaviorSubject(value: .none)
     private let elements: BehaviorSubject<[RestaurantModel]> = BehaviorSubject(value: [])
-    private let favourites: ReplaySubject<Void> = ReplaySubject<Void>.createUnbounded()
+    private let error: PublishSubject<ErrorType> = PublishSubject()
     private let disposables: DisposeBag = DisposeBag()
     
     func restaurants() -> Observable<[RestaurantModel]> {
@@ -38,27 +38,39 @@ class RestaurantsUseCase: RestaurantsUseCaseInterface {
     
     func load() {
         mappedElements()
-            .subscribe(onNext: {[weak self] list in
+            .subscribe(onSuccess: {[weak self] list in
                 self?.elements.onNext(list)
-            },onError: { _ in })
+            }, onFailure: {[weak self] error in
+                self?.error.onNext(error.mapNetworkError())
+            })
             .disposed(by: disposables)
     }
     
-    private func mappedElements() -> Observable<[RestaurantModel]> {
-        repository.getRestaurants().mapToUIModel()
-    }
+    func onError() -> Observable<ErrorType> { error }
     
-    func setFavourite(restaurant: RestaurantModel) -> Observable<Void> {
+    func setFavourite(restaurant: RestaurantModel) -> Completable {
         repository.setFavourite(uuid: restaurant.uuid)
     }
     
-    func removeFavourite(restaurant: RestaurantModel) -> Observable<Void> {
+    func removeFavourite(restaurant: RestaurantModel) -> Completable {
         repository.removeFavourite(uuid: restaurant.uuid)
     }
     
-    func isFavourite(restaurant: RestaurantModel) -> Observable<Bool> {
-        self.repository.favourites().flatMap {
-            Observable.just($0.contains(restaurant.uuid))
+    func observeFavourite(restaurant: RestaurantModel) -> Observable<Bool> {
+        self.repository
+            .favourites()
+            .flatMap { Observable.just($0.contains(restaurant.uuid)) }
+    }
+    
+    func isFavourite(restaurant: RestaurantModel) -> Single<Bool> {
+        self.repository.getFavouritesUuids().map {
+            $0.contains(restaurant.uuid)
         }
+    }
+    
+    private func mappedElements() -> Single<[RestaurantModel]> {
+        repository
+            .getRestaurants()
+            .mapToUIModel()
     }
 }

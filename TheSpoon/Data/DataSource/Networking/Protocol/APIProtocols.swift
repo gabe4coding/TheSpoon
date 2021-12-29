@@ -31,7 +31,6 @@ protocol RequestAPI {
     var customHeaders: [String: String] { get }
     var queryParameters: [String: String] { get }
     var bodyParameters: [String: Any]? { get }
-    var useMockWithName: String? { get }
 }
 
 struct APIResponse {
