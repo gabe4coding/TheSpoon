@@ -10,7 +10,7 @@ import RxSwift
 import RxDataSources
 
 class RestaurantsViewController: UITableViewController, ViewModelBindable {
-    
+    //MARK: Constants
     private struct ViewConst {
         //Table View
         static let rowHeight: CGFloat = 370
@@ -29,8 +29,8 @@ class RestaurantsViewController: UITableViewController, ViewModelBindable {
         static let txtWarning = "Warning"
     }
     
+    //MARK: Properties
     private var disposables: DisposeBag = DisposeBag()
-    
     var viewModel: RestaurantsViewModel?
     
     init(viewModel: RestaurantsViewModel) {
@@ -38,6 +38,7 @@ class RestaurantsViewController: UITableViewController, ViewModelBindable {
         super.init(style: .plain)
     }
     
+    //MARK: Init
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
@@ -49,6 +50,7 @@ class RestaurantsViewController: UITableViewController, ViewModelBindable {
         setupSubviews()
     }
     
+    //MARK: Setup
     func setupNavigationController() {
         
         navigationController?.navigationBar.topItem?.title = ViewConst.txtTitle
@@ -73,7 +75,10 @@ class RestaurantsViewController: UITableViewController, ViewModelBindable {
         
         tableView.register(RestaurantTableViewCell.self,
                            forCellReuseIdentifier: ViewConst.cellId)
-        
+        setupDataBinding()
+    }
+    
+    func setupDataBinding() {
         viewModel?
             .objects()
             .bind(to:
@@ -93,7 +98,7 @@ class RestaurantsViewController: UITableViewController, ViewModelBindable {
             .disposed(by: disposables)
     }
     
-    
+    //MARK: Events
     func errorOccured(error: ErrorType) {
         let alertController = UIAlertController(title: ViewConst.txtWarning,
                                                 message: errorMessage(error),
@@ -114,15 +119,8 @@ class RestaurantsViewController: UITableViewController, ViewModelBindable {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    private func errorMessage(_ error: ErrorType) -> String {
-        switch error {
-        case .offline:
-            return ViewConst.txtNoInternetMsg
-        default:
-            return ViewConst.txtGenericMsg
-        }
-    }
     
+    //MARK: Selector
     @objc func selectListOrder() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -155,6 +153,16 @@ class RestaurantsViewController: UITableViewController, ViewModelBindable {
         )
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    //MARK: Private Methods
+    private func errorMessage(_ error: ErrorType) -> String {
+        switch error {
+        case .offline:
+            return ViewConst.txtNoInternetMsg
+        default:
+            return ViewConst.txtGenericMsg
+        }
     }
 }
 
