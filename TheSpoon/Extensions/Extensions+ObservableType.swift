@@ -62,3 +62,25 @@ extension ObservableType where Element == RequestAPI {
     }
 }
 
+extension ObservableType where Element == RequestAPI {
+    func decodeMock<T: Decodable>(named: String) -> Single<T> {
+        Single<T>.create { observer in
+            if let path = Bundle.main.path(forResource: named, ofType: "json") {
+                do {
+                    let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                    let jsonDecoder = JSONDecoder()
+                    jsonDecoder.dateDecodingStrategy = .iso8601
+                    let decoded = try jsonDecoder.decode(T.self, from: data)
+                    observer(.success(decoded))
+                    
+                } catch {
+                    observer(.failure(APIError.failedDecoding))
+                }
+            } else {
+                observer(.failure(APIError.failedDecoding))
+            }
+            return Disposables.create()
+        }
+    }
+}
+

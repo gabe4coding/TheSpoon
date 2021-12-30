@@ -12,7 +12,16 @@ import RxAlamofire
 class NetworkingDataSource: NetworkingDataSourceInterface {
     
     func perform<T: Decodable>(request: RequestAPI) -> Single<T> {
-        Observable.just(request)
+        #if DEBUG
+        if Thread.current.isRunningXCTest {
+            if let mock = request.useMock {
+                return Observable.just(request)
+                    .decodeMock(named: mock)
+            }
+        }
+        #endif
+        
+        return Observable.just(request)
             .buildRequest()
             .flatMap { urlRequest -> Observable<T> in
                 RxAlamofire
@@ -25,3 +34,4 @@ class NetworkingDataSource: NetworkingDataSourceInterface {
             .asSingle()
     }
 }
+
