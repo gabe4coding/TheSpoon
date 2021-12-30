@@ -124,6 +124,10 @@ class RestaurantsViewController: UITableViewController, ViewModelBindable {
     @objc func selectListOrder() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            alertController.popoverPresentationController?.sourceView = navigationItem.rightBarButtonItem?.customView
+        }
+        
         alertController.addAction(
             UIAlertAction(title: ViewConst.txtNameSorting, style: .default, handler:
                 { [weak self] (action) -> Void in

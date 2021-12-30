@@ -17,6 +17,9 @@
 
 ## Changelog
 
+### v1.0.3
+- Fixed crash on iPad for missing support on popover menu.
+
 ### v1.0.2
 - Fixed wrong image status for favourite button. 
 
