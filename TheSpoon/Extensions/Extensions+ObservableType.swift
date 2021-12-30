@@ -8,11 +8,10 @@
 import Foundation
 import RxSwift
 
-extension PrimitiveSequence where Trait == SingleTrait, Element == Restaurants {
-    func mapToUIModel() -> Single<[RestaurantModel]> {
+extension ObservableType where Element == [Restaurant] {
+    func mapToUIModel() -> Observable<[RestaurantModel]> {
         map { restaurants in
-            restaurants.data.map { restuarant in
-                
+            restaurants.map { restuarant in
                 RestaurantModel(uuid: restuarant.uuid,
                                 name: restuarant.name,
                                 cuisine: restuarant.servesCuisine,

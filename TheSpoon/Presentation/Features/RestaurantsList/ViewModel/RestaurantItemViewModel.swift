@@ -21,18 +21,18 @@ class RestaurantItemViewModel: ViewModel {
     }
     
     func isFavourite() -> Observable<Bool> {
-        useCase.observeFavourite(restaurant: data)
+        useCase.observeFavourite(id: data.uuid)
     }
     
     func toggleFavourite() {
         useCase
-            .isFavourite(restaurant: data)
+            .isFavourite(id: data.uuid)
             .flatMapCompletable {[weak self] isFav -> Completable in
                 guard let self = self else {
                     return Observable.empty().asCompletable()
                 }
                 
-                return isFav ? self.useCase.removeFavourite(restaurant: self.data) : self.useCase.setFavourite(restaurant: self.data)
+                return isFav ? self.useCase.removeFavourite(id: self.data.uuid) : self.useCase.setFavourite(id: self.data.uuid)
             }
             .subscribe()
             .disposed(by: disposables)

@@ -31,27 +31,27 @@ protocol RestaurantsUseCaseInterface {
     
     ///Provides the list of restaurants loaded from the Cloud.
     ///- Returns An observable for the restaurants. It is useful to observe for changes in the list (e.g. sorting changes)
-    func restaurants() -> Observable<[RestaurantModel]>
+    func restaurants() -> Observable<[Restaurant]>
     
     ///Sets the specified restaurant as a favourite
-    ///- Parameter restaurant The specified restuarant to be added in favourites.
+    ///- Parameter id The specified restuarant ID to be added in favourites.
     ///- Returns A Completable which completes after setting.
-    func setFavourite(restaurant: RestaurantModel) -> Completable
+    func setFavourite(id: String) -> Completable
     
     ///Removes the specified restaurant as a favourite
-    ///- Parameter restaurant The specified restuarant to be removed from favourites.
+    ///- Parameter id The specified restuarant ID to be removed from favourites.
     ///- Returns A Completable which completes after removing.
-    func removeFavourite(restaurant: RestaurantModel) -> Completable
+    func removeFavourite(id: String) -> Completable
     
     ///Observes for changes about the  favourite status of specific restaurant.
-    ///- Parameter restaurant The specified restuarant to be checked in favourites.
+    ///- Parameter id The specified restuarant ID to be checked in favourites.
     ///- Returns An observable which returns the result.
-    func observeFavourite(restaurant: RestaurantModel) -> Observable<Bool>
+    func observeFavourite(id: String) -> Observable<Bool>
     
     ///Retrieves the latest status for the specified restaurant, then completes.
-    ///- Parameter restaurant The specified restuarant to be checked in favourites.
+    ///- Parameter id The specified restuarant ID to be checked in favourites.
     ///- Returns A Single which returns the result.
-    func isFavourite(restaurant: RestaurantModel) -> Single<Bool>
+    func isFavourite(id: String) -> Single<Bool>
 
     ///Executes a soring on the list (observed through **restaurants()**), based on a specified type.
     ///- Parameter type The sorting type to be applied on the restaurants list.
