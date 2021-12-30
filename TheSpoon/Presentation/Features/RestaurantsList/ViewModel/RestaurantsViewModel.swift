@@ -16,7 +16,10 @@ class RestaurantsViewModel: ViewModel {
     }
     
     func objects() -> Observable<[RestaurantModel]> {
-        useCase.restaurants().mapToUIModel()
+        useCase
+            .restaurants()
+            .mapToUIModel()
+            .observe(on: MainScheduler.instance)
     }
     
     func sort(by type: ListOrder) {
@@ -24,7 +27,9 @@ class RestaurantsViewModel: ViewModel {
     }
     
     func errorOccured() -> Observable<ErrorType> {
-        useCase.onError()
+        useCase
+            .onError()
+            .observe(on: MainScheduler.instance)
     }
     
     func reload() {

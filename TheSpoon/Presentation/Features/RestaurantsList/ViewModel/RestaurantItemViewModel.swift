@@ -21,7 +21,9 @@ class RestaurantItemViewModel: ViewModel {
     }
     
     func isFavourite() -> Observable<Bool> {
-        useCase.observeFavourite(id: data.uuid)
+        useCase
+            .observeFavourite(id: data.uuid)
+            .observe(on: MainScheduler.instance)
     }
     
     func toggleFavourite() {

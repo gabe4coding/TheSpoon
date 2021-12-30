@@ -10,7 +10,7 @@ import RxSwift
 
 protocol LocalStorageDataSourceInterface {
     
-    func object<T>(forKey tag: String) -> Single<T?>
+    func object<T>(forKey tag: String) -> Single<T>
     func set(value: Any?, forKey tag: String) -> Completable
     func removeObject(forKey tag: String) -> Completable
 }

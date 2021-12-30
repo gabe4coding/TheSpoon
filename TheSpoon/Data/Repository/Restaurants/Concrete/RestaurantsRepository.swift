@@ -72,6 +72,7 @@ class RestaurantsRepository: RestaurantsRepositoryInterface {
                 }
                 return result
             }
+            .catchAndReturn([])
     }
     
     private func retrieveUUids() -> Single<[String]?> {

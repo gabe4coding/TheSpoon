@@ -8,6 +8,10 @@
 import Foundation
 import RxSwift
 
+enum StorageError: Error {
+    case notFound
+}
+
 class LocalStorageDataSource: LocalStorageDataSourceInterface {
     private lazy var userDefault: UserDefaults = {
         #if DEBUG
@@ -21,9 +25,14 @@ class LocalStorageDataSource: LocalStorageDataSourceInterface {
         return UserDefaults.standard
     }()
 
-    func object<T: Any>(forKey tag: String) -> Single<T?> {
-        Single<T?>.create {[weak self] observer in
-            observer(.success(self?.userDefault.object(forKey: tag) as? T))
+    func object<T: Any>(forKey tag: String) -> Single<T> {
+        Single<T>.create {[weak self] observer in
+            if let obj = (self?.userDefault.object(forKey: tag) as? T) {
+                observer(.success(obj))
+            } else {
+                observer(.failure(StorageError.notFound))
+            }
+
             return Disposables.create()
         }
     }
@@ -31,7 +40,6 @@ class LocalStorageDataSource: LocalStorageDataSourceInterface {
     func set(value: Any?, forKey tag: String) -> Completable  {
         Completable.create { [weak self] observer in
             self?.userDefault.set(value, forKey: tag)
-            self?.userDefault.synchronize()
             observer(.completed)
             return Disposables.create()
         }
@@ -40,7 +48,6 @@ class LocalStorageDataSource: LocalStorageDataSourceInterface {
     func removeObject(forKey tag: String) -> Completable {
         Completable.create { [weak self] observer in
             self?.userDefault.removeObject(forKey: tag)
-            self?.userDefault.synchronize()
             observer(.completed)
             return Disposables.create()
         }
