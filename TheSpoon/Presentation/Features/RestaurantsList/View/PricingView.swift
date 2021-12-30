@@ -9,8 +9,23 @@ import Foundation
 import UIKit
 
 class PricingView: UIView {
-    @UsesAutoLayout
-    private var discount: UILabel = UILabel()
+    
+    //MARK: Subviews and Constraints
+    ///Discount label with yellow background
+    private lazy var discount: UILabel = {
+        @UsesAutoLayout
+        var label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.textColor = .black
+        label.textAlignment = .center
+        label.backgroundColor = .systemYellow
+        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 1
+        label.layer.cornerRadius = 5.0
+        label.clipsToBounds = true
+        return label
+    }()
+    
     private lazy var discountConstraints: [NSLayoutConstraint] = {
         [
             discount.topAnchor
@@ -27,8 +42,16 @@ class PricingView: UIView {
         ]
     }()
     
-    @UsesAutoLayout
-    private var price: UILabel = UILabel()
+    ///Average price label
+    private lazy var price: UILabel = {
+        @UsesAutoLayout
+        var label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        label.textColor = UIColor.subtitleColor
+        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 1
+        return label
+    }()
     private lazy var priceConstraints: [NSLayoutConstraint] = {
         [
             price.topAnchor
@@ -42,6 +65,7 @@ class PricingView: UIView {
         ]
     }()
     
+    //MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
@@ -53,25 +77,12 @@ class PricingView: UIView {
     }
     
     func setupSubviews() {
-        //Discount
-        discount.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        discount.textColor = .black
-        discount.textAlignment = .center
-        discount.backgroundColor = .systemYellow
-        discount.lineBreakMode = .byTruncatingTail
-        discount.numberOfLines = 1
-        discount.layer.cornerRadius = 5.0
-        discount.clipsToBounds = true
         addSubview(discount)
         
-        //Average Price
-        price.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        price.textColor = UIColor.subtitleColor
-        price.lineBreakMode = .byTruncatingTail
-        price.numberOfLines = 1
         addSubview(price)
     }
     
+    //MARK: Setup
     func setText(discount: String, price: String) {
         self.discount.text = discount
         self.price.text = price
@@ -82,6 +93,7 @@ class PricingView: UIView {
         NSLayoutConstraint.activate(discountConstraints + priceConstraints)
     }
     
+    //MARK: Overrides
     override class var requiresConstraintBasedLayout: Bool {
         return true
     }

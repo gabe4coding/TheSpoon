@@ -16,7 +16,7 @@ class RestaurantsViewModel: ViewModel {
     }
     
     func objects() -> Observable<[RestaurantModel]> {
-        useCase.restaurants()
+        useCase.restaurants().mapToUIModel()
     }
     
     func sort(by type: ListOrder) {

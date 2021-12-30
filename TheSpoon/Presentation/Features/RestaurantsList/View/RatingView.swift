@@ -9,13 +9,22 @@ import UIKit
 
 class RatingView: UIView {
     
+    //MARK: Constants
     private struct ViewConst {
         static let reviewIconSize: CGFloat = 13
         static let reviewIconName: String = "icon-reviews"
     }
     
-    @UsesAutoLayout
-    private var ratinglbl: UILabel = UILabel()
+    //MARK: Subviews and Constraints
+    ///Rating number
+    private lazy var ratinglbl: UILabel = {
+        @UsesAutoLayout
+        var label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 26, weight: .bold)
+        label.textAlignment = .right
+        label.textColor = UIColor.titleColor
+        return label
+    }()
     private lazy var ratinglblConstraints: [NSLayoutConstraint] = {
         [
             ratinglbl.topAnchor
@@ -26,8 +35,15 @@ class RatingView: UIView {
         ]
     }()
     
-    @UsesAutoLayout
-    private var reviewsLbl: UILabel = UILabel()
+    ///Number of reviews
+    private lazy var reviewsLbl: UILabel = {
+        @UsesAutoLayout
+        var label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        label.textAlignment = .right
+        label.textColor = UIColor.subtitleColor
+        return label
+    }()
     private lazy var reviewsLblConstraints : [NSLayoutConstraint] = {
         [
             reviewsLbl.topAnchor
@@ -41,8 +57,15 @@ class RatingView: UIView {
         ]
     }()
     
-    @UsesAutoLayout
-    private var imgReviews: UIImageView = UIImageView()
+    ///Reivews image badge.
+    private lazy var imgReviews: UIImageView = {
+        @UsesAutoLayout
+        var img = UIImageView()
+        img.image = UIImage(named: ViewConst.reviewIconName)?.withRenderingMode(.alwaysTemplate)
+        img.tintColor = UIColor.subtitleColor
+        img.contentMode = .scaleAspectFit
+        return img
+    }()
     private lazy var imgReviewsConstraints: [NSLayoutConstraint] = {
         [
             imgReviews.trailingAnchor
@@ -59,6 +82,7 @@ class RatingView: UIView {
         ]
     }()
     
+    //MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
@@ -69,20 +93,12 @@ class RatingView: UIView {
         setupSubviews()
     }
     
+    //MARK: Setup
     func setupSubviews() {
-        ratinglbl.font = UIFont.systemFont(ofSize: 26, weight: .bold)
-        ratinglbl.textAlignment = .right
-        ratinglbl.textColor = UIColor.titleColor
         addSubview(ratinglbl)
 
-        imgReviews.image = UIImage(named: ViewConst.reviewIconName)?.withRenderingMode(.alwaysTemplate)
-        imgReviews.tintColor = UIColor.subtitleColor
-        imgReviews.contentMode = .scaleAspectFit
         addSubview(imgReviews)
         
-        reviewsLbl.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        reviewsLbl.textAlignment = .right
-        reviewsLbl.textColor = UIColor.subtitleColor
         addSubview(reviewsLbl)
     }
     

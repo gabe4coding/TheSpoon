@@ -15,4 +15,13 @@
 - Since i've worked in the last year and half only with **SwiftUI** and **Combine**, it took sometime to come back on UIKit and Rx, and moreover i had the opportunity to completely avoid to use Storyboards/xibs, which gives much more control on the UI in my optinion.
 - I didn't had much time to think and implement new features or implement Unit Tests unfortunately :(
 
+## Changelog
+
+### v1.0.1
+- Moved mapping of RestaurantModel from UseCase to ViewModel
+- Code Refactor
+
+### v1.0.0
+- Release
+
 
