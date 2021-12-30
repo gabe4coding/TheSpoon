@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ECBBBD6F577F6D323960F0C3 /* Pods_TheSpoonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BE8E89F598DD6C2C8EA00E8 /* Pods_TheSpoonTests.framework */; };
 		F41F05D0BBE2AF3C6351347E /* Pods_TheSpoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050CEB316EA3C831D34C7380 /* Pods_TheSpoon.framework */; };
 		F79E7B90277B05B4003866BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79E7B8F277B05B4003866BB /* AppDelegate.swift */; };
 		F79E7B94277B05B4003866BB /* RestaurantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79E7B93277B05B4003866BB /* RestaurantsViewController.swift */; };
@@ -38,12 +39,31 @@
 		F79E7BFA277C5910003866BB /* Extensions+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79E7BF9277C5910003866BB /* Extensions+UIBarButtonItem.swift */; };
 		F79E7BFC277C67A0003866BB /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79E7BFB277C67A0003866BB /* PricingView.swift */; };
 		F79E7BFE277C7CA1003866BB /* Extensions+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79E7BFD277C7CA1003866BB /* Extensions+Error.swift */; };
+		F7BC7797277DC03500F7D839 /* LocalStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BC7796277DC03500F7D839 /* LocalStorageTests.swift */; };
+		F7BC779F277DC55C00F7D839 /* Extensions+Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BC779E277DC55C00F7D839 /* Extensions+Thread.swift */; };
+		F7BC77A3277DCA4200F7D839 /* restaurants.json in Resources */ = {isa = PBXBuildFile; fileRef = F7BC77A2277DCA4200F7D839 /* restaurants.json */; };
+		F7BC77A4277DCA4200F7D839 /* restaurants.json in Resources */ = {isa = PBXBuildFile; fileRef = F7BC77A2277DCA4200F7D839 /* restaurants.json */; };
+		F7C670AC277DDEFC0063BADF /* RestaurantsRepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C670AB277DDEFC0063BADF /* RestaurantsRepositoryTest.swift */; };
+		F7C670AE277DE5430063BADF /* RestaurantsUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C670AD277DE5430063BADF /* RestaurantsUseCaseTest.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F7BC7798277DC03500F7D839 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F79E7B84277B05B4003866BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F79E7B8B277B05B4003866BB;
+			remoteInfo = TheSpoon;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		050CEB316EA3C831D34C7380 /* Pods_TheSpoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheSpoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		08B5048F01F2C3A01EF73FD3 /* Pods-TheSpoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheSpoon.release.xcconfig"; path = "Target Support Files/Pods-TheSpoon/Pods-TheSpoon.release.xcconfig"; sourceTree = "<group>"; };
+		0BE8E89F598DD6C2C8EA00E8 /* Pods_TheSpoonTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheSpoonTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		399F88D8A7F21DD4A79802D6 /* Pods-TheSpoonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheSpoonTests.debug.xcconfig"; path = "Target Support Files/Pods-TheSpoonTests/Pods-TheSpoonTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6F8A47661F524B7F99D51E26 /* Pods-TheSpoon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheSpoon.debug.xcconfig"; path = "Target Support Files/Pods-TheSpoon/Pods-TheSpoon.debug.xcconfig"; sourceTree = "<group>"; };
+		72A5B482342CB18B63CCC79F /* Pods-TheSpoonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheSpoonTests.release.xcconfig"; path = "Target Support Files/Pods-TheSpoonTests/Pods-TheSpoonTests.release.xcconfig"; sourceTree = "<group>"; };
 		F79E7B8C277B05B4003866BB /* TheSpoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheSpoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F79E7B8F277B05B4003866BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F79E7B93277B05B4003866BB /* RestaurantsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +97,12 @@
 		F79E7BFB277C67A0003866BB /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
 		F79E7BFD277C7CA1003866BB /* Extensions+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Error.swift"; sourceTree = "<group>"; };
 		F79E7BFF277C7D08003866BB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		F7BC7794277DC03500F7D839 /* TheSpoonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheSpoonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7BC7796277DC03500F7D839 /* LocalStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageTests.swift; sourceTree = "<group>"; };
+		F7BC779E277DC55C00F7D839 /* Extensions+Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Thread.swift"; sourceTree = "<group>"; };
+		F7BC77A2277DCA4200F7D839 /* restaurants.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = restaurants.json; sourceTree = "<group>"; };
+		F7C670AB277DDEFC0063BADF /* RestaurantsRepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsRepositoryTest.swift; sourceTree = "<group>"; };
+		F7C670AD277DE5430063BADF /* RestaurantsUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsUseCaseTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +114,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F7BC7791277DC03500F7D839 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ECBBBD6F577F6D323960F0C3 /* Pods_TheSpoonTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -96,6 +130,8 @@
 			children = (
 				6F8A47661F524B7F99D51E26 /* Pods-TheSpoon.debug.xcconfig */,
 				08B5048F01F2C3A01EF73FD3 /* Pods-TheSpoon.release.xcconfig */,
+				399F88D8A7F21DD4A79802D6 /* Pods-TheSpoonTests.debug.xcconfig */,
+				72A5B482342CB18B63CCC79F /* Pods-TheSpoonTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -104,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				050CEB316EA3C831D34C7380 /* Pods_TheSpoon.framework */,
+				0BE8E89F598DD6C2C8EA00E8 /* Pods_TheSpoonTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -112,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				F79E7B8E277B05B4003866BB /* TheSpoon */,
+				F7BC7795277DC03500F7D839 /* TheSpoonTests */,
 				F79E7B8D277B05B4003866BB /* Products */,
 				5204BC771AF68C3231F62FA9 /* Pods */,
 				76481064787BC31DE2A32216 /* Frameworks */,
@@ -122,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				F79E7B8C277B05B4003866BB /* TheSpoon.app */,
+				F7BC7794277DC03500F7D839 /* TheSpoonTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -129,6 +168,7 @@
 		F79E7B8E277B05B4003866BB /* TheSpoon */ = {
 			isa = PBXGroup;
 			children = (
+				F7BC77A0277DC9E000F7D839 /* Resoueces */,
 				F79E7B8F277B05B4003866BB /* AppDelegate.swift */,
 				F79E7BCA277BC744003866BB /* Presentation */,
 				F79E7BC2277B726D003866BB /* Domain */,
@@ -151,6 +191,7 @@
 				F79E7BF4277C5458003866BB /* Extensions+UIColor.swift */,
 				F79E7BF9277C5910003866BB /* Extensions+UIBarButtonItem.swift */,
 				F79E7BFD277C7CA1003866BB /* Extensions+Error.swift */,
+				F7BC779E277DC55C00F7D839 /* Extensions+Thread.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -405,6 +446,32 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		F7BC7795277DC03500F7D839 /* TheSpoonTests */ = {
+			isa = PBXGroup;
+			children = (
+				F7BC7796277DC03500F7D839 /* LocalStorageTests.swift */,
+				F7C670AB277DDEFC0063BADF /* RestaurantsRepositoryTest.swift */,
+				F7C670AD277DE5430063BADF /* RestaurantsUseCaseTest.swift */,
+			);
+			path = TheSpoonTests;
+			sourceTree = "<group>";
+		};
+		F7BC77A0277DC9E000F7D839 /* Resoueces */ = {
+			isa = PBXGroup;
+			children = (
+				F7BC77A1277DC9E800F7D839 /* Mocks */,
+			);
+			path = Resoueces;
+			sourceTree = "<group>";
+		};
+		F7BC77A1277DC9E800F7D839 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				F7BC77A2277DCA4200F7D839 /* restaurants.json */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -427,6 +494,26 @@
 			productReference = F79E7B8C277B05B4003866BB /* TheSpoon.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F7BC7793277DC03500F7D839 /* TheSpoonTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7BC779A277DC03500F7D839 /* Build configuration list for PBXNativeTarget "TheSpoonTests" */;
+			buildPhases = (
+				25D17432837EDECD0CA68C81 /* [CP] Check Pods Manifest.lock */,
+				F7BC7790277DC03500F7D839 /* Sources */,
+				F7BC7791277DC03500F7D839 /* Frameworks */,
+				F7BC7792277DC03500F7D839 /* Resources */,
+				4311316E0D1ADDBFCE45A22E /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F7BC7799277DC03500F7D839 /* PBXTargetDependency */,
+			);
+			name = TheSpoonTests;
+			productName = TheSpoonTests;
+			productReference = F7BC7794277DC03500F7D839 /* TheSpoonTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -439,6 +526,10 @@
 				TargetAttributes = {
 					F79E7B8B277B05B4003866BB = {
 						CreatedOnToolsVersion = 13.2.1;
+					};
+					F7BC7793277DC03500F7D839 = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = F79E7B8B277B05B4003866BB;
 					};
 				};
 			};
@@ -456,6 +547,7 @@
 			projectRoot = "";
 			targets = (
 				F79E7B8B277B05B4003866BB /* TheSpoon */,
+				F7BC7793277DC03500F7D839 /* TheSpoonTests */,
 			);
 		};
 /* End PBXProject section */
@@ -465,13 +557,44 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7BC77A3277DCA4200F7D839 /* restaurants.json in Resources */,
 				F79E7BAF277B3566003866BB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7BC7792277DC03500F7D839 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7BC77A4277DCA4200F7D839 /* restaurants.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		25D17432837EDECD0CA68C81 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TheSpoonTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2B9E3983E8BD049F25257EF2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -511,6 +634,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		4311316E0D1ADDBFCE45A22E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheSpoonTests/Pods-TheSpoonTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheSpoonTests/Pods-TheSpoonTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TheSpoonTests/Pods-TheSpoonTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -531,6 +671,7 @@
 				F79E7BF5277C5458003866BB /* Extensions+UIColor.swift in Sources */,
 				F79E7BF1277BCDD1003866BB /* LocalStorageDataSourceInterface.swift in Sources */,
 				F79E7BEC277BCC18003866BB /* NetworkingDataSource.swift in Sources */,
+				F7BC779F277DC55C00F7D839 /* Extensions+Thread.swift in Sources */,
 				F79E7BFA277C5910003866BB /* Extensions+UIBarButtonItem.swift in Sources */,
 				F79E7BA8277B0E2A003866BB /* UsesAutoLayout.swift in Sources */,
 				F79E7BB6277B6467003866BB /* Dependencies.swift in Sources */,
@@ -550,7 +691,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F7BC7790277DC03500F7D839 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7C670AC277DDEFC0063BADF /* RestaurantsRepositoryTest.swift in Sources */,
+				F7C670AE277DE5430063BADF /* RestaurantsUseCaseTest.swift in Sources */,
+				F7BC7797277DC03500F7D839 /* LocalStorageTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F7BC7799277DC03500F7D839 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F79E7B8B277B05B4003866BB /* TheSpoon */;
+			targetProxy = F7BC7798277DC03500F7D839 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		F79E7B9E277B05B6003866BB /* Debug */ = {
@@ -692,7 +851,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gpavanello.TheSpoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -724,12 +883,50 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gpavanello.TheSpoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F7BC779B277DC03500F7D839 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 399F88D8A7F21DD4A79802D6 /* Pods-TheSpoonTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9829EQ5A6K;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gpavanello.TheSpoonTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TheSpoon.app/TheSpoon";
+			};
+			name = Debug;
+		};
+		F7BC779C277DC03500F7D839 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72A5B482342CB18B63CCC79F /* Pods-TheSpoonTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9829EQ5A6K;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gpavanello.TheSpoonTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TheSpoon.app/TheSpoon";
 			};
 			name = Release;
 		};
@@ -750,6 +947,15 @@
 			buildConfigurations = (
 				F79E7BA1277B05B6003866BB /* Debug */,
 				F79E7BA2277B05B6003866BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7BC779A277DC03500F7D839 /* Build configuration list for PBXNativeTarget "TheSpoonTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7BC779B277DC03500F7D839 /* Debug */,
+				F7BC779C277DC03500F7D839 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

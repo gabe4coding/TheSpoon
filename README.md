@@ -17,6 +17,9 @@
 
 ## Changelog
 
+### v1.0.4 
+- Implemented Unit Tests
+
 ### v1.0.3
 - Fixed crash on iPad for missing support on popover menu.
 

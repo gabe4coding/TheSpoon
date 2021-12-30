@@ -14,8 +14,8 @@ enum APIHTTPMethod: String {
     case put
 }
 
-enum APIError: Swift.Error {
-    case failedDecoding(Error?)
+enum APIError: Error {
+    case failedDecoding
     case invalidUrl
     case generic(Error)
     case genericError
@@ -31,6 +31,7 @@ protocol RequestAPI {
     var customHeaders: [String: String] { get }
     var queryParameters: [String: String] { get }
     var bodyParameters: [String: Any]? { get }
+    var useMock: String? { get }
 }
 
 struct APIResponse {

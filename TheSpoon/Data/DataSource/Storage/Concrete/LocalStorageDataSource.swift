@@ -9,7 +9,17 @@ import Foundation
 import RxSwift
 
 class LocalStorageDataSource: LocalStorageDataSourceInterface {
-    private let userDefault = UserDefaults.standard
+    private lazy var userDefault: UserDefaults = {
+        #if DEBUG
+        if Thread.current.isRunningXCTest {
+            let userDefault = UserDefaults(suiteName: #file)
+            userDefault?.removePersistentDomain(forName: #file)
+            return userDefault!
+        }
+        #endif
+        
+        return UserDefaults.standard
+    }()
 
     func object<T: Any>(forKey tag: String) -> Single<T?> {
         Single<T?>.create {[weak self] observer in

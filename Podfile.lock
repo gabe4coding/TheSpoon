@@ -1,11 +1,15 @@
 PODS:
   - Alamofire (5.5.0)
   - Differentiator (5.0.0)
+  - Nimble (9.2.1)
+  - Quick (4.0.0)
   - RxAlamofire (6.1.1):
     - RxAlamofire/Core (= 6.1.1)
   - RxAlamofire/Core (6.1.1):
     - Alamofire (~> 5.4)
     - RxSwift (~> 6.0)
+  - RxBlocking (6.2.0):
+    - RxSwift (= 6.2.0)
   - RxCocoa (6.2.0):
     - RxRelay (= 6.2.0)
     - RxSwift (= 6.2.0)
@@ -13,14 +17,24 @@ PODS:
     - Differentiator (~> 5.0)
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
+  - RxNimble (5.1.2):
+    - RxNimble/RxBlocking (= 5.1.2)
+  - RxNimble/Core (5.1.2):
+    - Nimble (~> 9.2)
+    - RxSwift (~> 6.0)
+  - RxNimble/RxBlocking (5.1.2):
+    - RxBlocking
+    - RxNimble/Core
   - RxRelay (6.2.0):
     - RxSwift (= 6.2.0)
   - RxSwift (6.2.0)
   - Swinject (2.8.1)
 
 DEPENDENCIES:
+  - Quick
   - RxAlamofire
   - RxDataSources (~> 5.0)
+  - RxNimble
   - RxSwift (~> 6.2)
   - Swinject (~> 2.8)
 
@@ -28,9 +42,13 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - Differentiator
+    - Nimble
+    - Quick
     - RxAlamofire
+    - RxBlocking
     - RxCocoa
     - RxDataSources
+    - RxNimble
     - RxRelay
     - RxSwift
     - Swinject
@@ -38,13 +56,17 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
+  Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
   RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
+  RxBlocking: 0b29f7d2079109a8de49c411381bed7c33ef1eeb
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxNimble: 60c8162b1518306a11d0c272a65ade133b209670
   RxRelay: e72dbfd157807478401ef1982e1c61c945c94b2f
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   Swinject: 97112918bd7e0785dc2df7036213f3c8cbba6586
 
-PODFILE CHECKSUM: f9bde4a42a52b2f079de7364a85547b602e8c20f
+PODFILE CHECKSUM: 78443d4055ecca4c9d88283b54402b03c48022e9
 
 COCOAPODS: 1.11.2
