@@ -17,6 +17,9 @@
 
 ## Changelog
 
+### v1.0.2
+- Fixed wrong image status for favourite button. 
+
 ### v1.0.1
 - Moved mapping of RestaurantModel from UseCase to ViewModel
 - Code Refactor
