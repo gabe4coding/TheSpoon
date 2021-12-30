@@ -16,8 +16,8 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
         static let imageHeight: CGFloat = 210
         static let ratingWidth: CGFloat = 80
         static let squaredBtnFavSize: CGFloat = 35
-        static let enabledFavBtnName: String = "empty-heart"
-        static let disabledFavBtnName: String = "solid-heart"
+        static let enabledFavBtnName: String = "solid-heart"
+        static let disabledFavBtnName: String = "empty-heart"
         static let avgPriceText: String = "Average price"
     }
     
