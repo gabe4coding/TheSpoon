@@ -79,11 +79,10 @@ class RestaurantsViewController: UITableViewController, ViewModelBindable {
     }
     
     func setupDataBinding() {
-        viewModel?
-            .objects()
+        viewModel?.objects()
             .bind(to:
                 tableView.rx.items(cellIdentifier: ViewConst.cellId,
-                           cellType: RestaurantTableViewCell.self)
+                                         cellType: RestaurantTableViewCell.self)
                   
             ) { _, model, cell in
                 cell.bind(to: RestaurantItemViewModel(model: model))

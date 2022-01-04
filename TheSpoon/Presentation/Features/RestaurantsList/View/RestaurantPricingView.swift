@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class PricingView: UIView {
+class RestaurantPricingView: UIView {
     
     //MARK: Subviews and Constraints
     ///Discount label with yellow background

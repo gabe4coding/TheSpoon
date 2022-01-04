@@ -31,10 +31,11 @@ class RestaurantItemViewModel: ViewModel {
             .isFavourite(id: data.uuid)
             .flatMapCompletable {[weak self] isFav -> Completable in
                 guard let self = self else {
-                    return Observable.empty().asCompletable()
+                    return Completable.empty()
                 }
                 
-                return isFav ? self.useCase.removeFavourite(id: self.data.uuid) : self.useCase.setFavourite(id: self.data.uuid)
+                return isFav ? self.useCase.removeFavourite(id: self.data.uuid) :
+                               self.useCase.setFavourite(id: self.data.uuid)
             }
             .subscribe()
             .disposed(by: disposables)

@@ -36,14 +36,16 @@ class RestaurantsRepository: RestaurantsRepositoryInterface {
         getFavouritesUuids()
             .flatMapCompletable {[weak self] uuids in
                 guard let self = self else {
-                    return Observable.empty().asCompletable()
+                    return Completable.empty()
                 }
                 var newUuids = Set(uuids)
                 newUuids.insert(uuid)
                 
-                self.subject.onNext(Array(newUuids))
-                return self.storage.set(value: Array(newUuids),
-                                        forKey: Constants.favouritesKey)
+                return self.storage
+                    .set(value: Array(newUuids), forKey: Constants.favouritesKey)
+                    .do(onCompleted:  {
+                        self.subject.onNext(Array(newUuids))
+                    })
             }
     }
     
@@ -51,14 +53,16 @@ class RestaurantsRepository: RestaurantsRepositoryInterface {
         getFavouritesUuids()
             .flatMapCompletable {[weak self] uuids in
                 guard let self = self else {
-                    return Observable.empty().asCompletable()
+                    return Completable.empty()
                 }
                 var newUuids = Set(uuids)
                 newUuids.remove(uuid)
                 
-                self.subject.onNext(Array(newUuids))
-                return self.storage.set(value: Array(newUuids),
-                                        forKey: Constants.favouritesKey)
+                return self.storage
+                    .set(value: Array(newUuids), forKey: Constants.favouritesKey)
+                    .do(onCompleted:  {
+                        self.subject.onNext(Array(newUuids))
+                    })
             }
     }
     

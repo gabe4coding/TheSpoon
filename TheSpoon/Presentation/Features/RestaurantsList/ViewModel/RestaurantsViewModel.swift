@@ -12,7 +12,7 @@ class RestaurantsViewModel: ViewModel {
     @Inject private var useCase: RestaurantsUseCaseInterface
     
     init() {
-        useCase.load()
+        reload()
     }
     
     func objects() -> Observable<[RestaurantModel]> {

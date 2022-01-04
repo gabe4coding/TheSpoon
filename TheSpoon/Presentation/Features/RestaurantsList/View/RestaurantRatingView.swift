@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RatingView: UIView {
+class RestaurantRatingView: UIView {
     
     //MARK: Constants
     private struct ViewConst {

@@ -26,6 +26,23 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
     private var disposable: Disposable? = nil
     
     //MARK: Subviews and Constraints
+    @UsesAutoLayout
+    var imgView: RestaurantImageView = RestaurantImageView(frame: .zero)
+    lazy var imgViewConstraints: [NSLayoutConstraint] = { [
+        imgView.topAnchor
+            .constraint(equalTo: contentView.topAnchor,
+                        constant: Layout.topPadding),
+        
+        imgView.leadingAnchor
+            .constraint(equalTo: contentView.leadingAnchor,
+                        constant: Layout.leftPadding),
+        
+        imgView.trailingAnchor
+            .constraint(equalTo: contentView.trailingAnchor,
+                        constant: Layout.rightPadding)
+        
+    ] }()
+    
     ///Name of the restaurant
     lazy var name: UILabel = {
         @UsesAutoLayout
@@ -50,60 +67,11 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
     
     ///Pricing info of the restaurant
     @UsesAutoLayout
-    var pricingView: PricingView = PricingView(frame: .zero)
+    var pricingView: RestaurantPricingView = RestaurantPricingView(frame: .zero)
     
     ///Rating info of the restaurant
     @UsesAutoLayout
-    var rating: RatingView = RatingView(frame: .zero)
-    
-    ///Image of the restaurant
-    lazy var imgView: UIImageView = {
-        @UsesAutoLayout
-        var image = UIImageView()
-        image.layer.cornerRadius = 5.0
-        image.clipsToBounds = true
-        image.backgroundColor = .lightGray
-        image.contentMode = .scaleAspectFill
-        return image
-    }()
-    private lazy var imgViewConstraints: [NSLayoutConstraint] = {
-        [
-            imgView.topAnchor
-                .constraint(equalTo: contentView.topAnchor,
-                            constant: Layout.topPadding),
-            
-            imgView.leadingAnchor
-                .constraint(equalTo: contentView.leadingAnchor,
-                            constant: Layout.leftPadding),
-            
-            imgView.trailingAnchor
-                .constraint(equalTo: contentView.trailingAnchor,
-                            constant: Layout.rightPadding),
-            
-            imgView.heightAnchor
-                .constraint(equalToConstant: ViewConst.imageHeight)
-        ]
-    }()
-    
-    ///Cuisine type of the restaurant
-    lazy var cuisine: UILabel = {
-        @UsesAutoLayout
-        var label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor.subtitleColor
-        label.layer.opacity = 0.4
-        return label
-    }()
-    private lazy var cuisineConstraints: [NSLayoutConstraint] = {
-        [
-            cuisine.leadingAnchor
-                .constraint(equalTo: imgView.leadingAnchor),
-            
-            cuisine.topAnchor
-                .constraint(equalTo: imgView.bottomAnchor,
-                            constant: Layout.topPadding)
-        ]
-    }()
+    var ratingView: RestaurantRatingView = RestaurantRatingView(frame: .zero)
     
     ///Toggle favourite button of the restaurant.
     lazy var favouriteBtn: UIButton = {
@@ -161,7 +129,7 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
     
     ///HStack of the Restaurant Info and Rating
     lazy var stackInfoAndRating: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [self.stackInfo, self.rating])
+        let stack = UIStackView(arrangedSubviews: [self.stackInfo, self.ratingView])
         stack.axis = .horizontal
         stack.alignment = .top
         stack.spacing = Layout.spacing * 4
@@ -173,7 +141,7 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
     lazy var stackInfoConstraints: [NSLayoutConstraint] = {
         [
             stackInfoAndRating.topAnchor
-                .constraint(equalTo: cuisine.bottomAnchor,
+                .constraint(equalTo: imgView.bottomAnchor,
                             constant: Layout.topPadding * 1.2),
             
             stackInfoAndRating.leadingAnchor
@@ -205,11 +173,8 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
     
     //MARK: Setup
     private func setupSubviews() {
-        //Main Image
+        //Main Image + Cuisine
         contentView.addSubview(imgView)
-        
-        //Cuisine Type
-        contentView.addSubview(cuisine)
         
         //Favourite
         contentView.addSubview(favouriteBtn)
@@ -220,7 +185,6 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate(imgViewConstraints +
-                                    cuisineConstraints +
                                     stackInfoConstraints +
                                     favouriteBtnConstraints)
     }
@@ -228,21 +192,9 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
     private func setupDataBinding() {
         //Reset in case of new binding when cell is reused
         disposable?.dispose()
-        imgView.image = nil
         
-        if let img = viewModel?.data.img {
-            imgView.load(url: img)
-        }
-        
-        cuisine.text = viewModel?.data.cuisine.uppercased() ?? "-"
         name.text = viewModel?.data.name ?? "-"
         address.text = viewModel?.data.address ?? "-"
-        
-        pricingView.setText(discount: viewModel?.data.discount ?? "-",
-                            price: "\(ViewConst.avgPriceText) \(viewModel?.data.avgPrice ?? "-")€")
-        
-        rating.setText(rating: viewModel?.data.rating ?? "-",
-                       reviews: viewModel?.data.numReviews ?? "-")
         
         //In a use case where favourite is managed with a remote storage, it could be useful
         //to add a loader when the selection changes.
@@ -257,6 +209,15 @@ class RestaurantTableViewCell: UITableViewCell, ItemViewModelBindable {
                                   animations: { self.favouriteBtn.isSelected = value },
                                   completion: nil)
             })
+        
+        pricingView.setText(discount: viewModel?.data.discount ?? "-",
+                            price: "\(ViewConst.avgPriceText) \(viewModel?.data.avgPrice ?? "-")€")
+        
+        ratingView.setText(rating: viewModel?.data.rating ?? "-",
+                           reviews: viewModel?.data.numReviews ?? "-")
+        
+        imgView.set(cuisine: viewModel?.data.cuisine,
+                    img: viewModel?.data.img)
         
         setupConstraints()
     }

@@ -8,20 +8,20 @@
 import Foundation
 import RxSwift
 
+enum AppError: Error {
+    case mappingFailed
+}
+
 extension ObservableType where Element == [Restaurant] {
-    func mapToUIModel() -> Observable<[RestaurantModel]> {
-        map { restaurants in
-            restaurants.map { restuarant in
-                RestaurantModel(uuid: restuarant.uuid,
-                                name: restuarant.name,
-                                cuisine: restuarant.servesCuisine,
-                                address: "\(restuarant.address.street), \(restuarant.address.postalCode), \(restuarant.address.locality)",
-                                avgPrice: "\(restuarant.priceRange)",
-                                discount: restuarant.bestOffer.label,
-                                rating: "\(restuarant.aggregateRatings.thefork.ratingValue)",
-                                numReviews: "\(restuarant.aggregateRatings.thefork.reviewCount)",
-                                img: restuarant.mainPhoto?.the664X374)
+    func mapToUIModel<T>() -> Observable<[T]> {
+        flatMap { restaurants -> Observable<[T]> in
+            let mapped: [T]? = restaurants.map()
+            
+            guard let result = mapped else {
+                return Observable.error(AppError.mappingFailed)
             }
+            
+            return Observable.just(result)
         }
     }
 }

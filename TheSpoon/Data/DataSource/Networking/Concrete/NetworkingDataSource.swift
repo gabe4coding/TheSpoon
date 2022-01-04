@@ -11,6 +11,10 @@ import RxAlamofire
 
 class NetworkingDataSource: NetworkingDataSourceInterface {
     
+    private struct Constants {
+        static let responseQueue: String = "TSAPI-Queue"
+    }
+    
     func perform<T: Decodable>(request: RequestAPI) -> Single<T> {
         #if DEBUG
         if Thread.current.isRunningXCTest {
@@ -26,6 +30,7 @@ class NetworkingDataSource: NetworkingDataSourceInterface {
             .flatMap { urlRequest -> Observable<T> in
                 RxAlamofire
                     .requestDecodable(urlRequest)
+                    .observe(on: SerialDispatchQueueScheduler.init(internalSerialQueueName: Constants.responseQueue))
                     .debug()
                     .flatMap { _, decoded in
                         Observable<T>.just(decoded)
